@@ -9,6 +9,9 @@
         <entry key="..\:/NOTES_AND_STUFF/AppProjects/HappyPlaces/app/src/main/res/drawable/ic_love.xml" value="0.2815" />
         <entry key="..\:/NOTES_AND_STUFF/AppProjects/HappyPlaces/app/src/main/res/drawable/ic_search.xml" value="0.2815" />
         <entry key="..\:/NOTES_AND_STUFF/AppProjects/HappyPlaces/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/NOTES_AND_STUFF/AppProjects/HappyPlaces/app/src/main/res/layout/fragment_add.xml" value="0.35260416666666666" />
+        <entry key="..\:/NOTES_AND_STUFF/AppProjects/HappyPlaces/app/src/main/res/layout/fragment_favorite.xml" value="0.35260416666666666" />
+        <entry key="..\:/NOTES_AND_STUFF/AppProjects/HappyPlaces/app/src/main/res/layout/fragment_home.xml" value="0.3605072463768116" />
         <entry key="..\:/NOTES_AND_STUFF/AppProjects/HappyPlaces/app/src/main/res/menu/bottom_nav_menu.xml" value="0.36666666666666664" />
       </map>
     </option>

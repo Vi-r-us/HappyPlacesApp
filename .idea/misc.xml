@@ -3,7 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/NOTES_AND_STUFF/AppProjects/HappyPlaces/app/src/main/res/layout/activity_main.xml" value="0.3605072463768116" />
+        <entry key="..\:/NOTES_AND_STUFF/AppProjects/HappyPlaces/app/src/main/res/drawable/custom_bottom_appbar.xml" value="0.25" />
+        <entry key="..\:/NOTES_AND_STUFF/AppProjects/HappyPlaces/app/src/main/res/drawable/ic_baseline_add_circle_outline_24.xml" value="0.2815" />
+        <entry key="..\:/NOTES_AND_STUFF/AppProjects/HappyPlaces/app/src/main/res/drawable/ic_home.xml" value="0.2815" />
+        <entry key="..\:/NOTES_AND_STUFF/AppProjects/HappyPlaces/app/src/main/res/drawable/ic_love.xml" value="0.2815" />
+        <entry key="..\:/NOTES_AND_STUFF/AppProjects/HappyPlaces/app/src/main/res/drawable/ic_search.xml" value="0.2815" />
+        <entry key="..\:/NOTES_AND_STUFF/AppProjects/HappyPlaces/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/NOTES_AND_STUFF/AppProjects/HappyPlaces/app/src/main/res/menu/bottom_nav_menu.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>

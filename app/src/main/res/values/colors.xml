@@ -10,6 +10,9 @@
     
     <!-- Custom Colors -->
     <color name="primaryColorBtn">#003fff</color>
-    <color name="secondaryColorBtn">#f1f1f4</color>
-    <color name="blackToolBar">#000000</color>
+    <color name="background">#f2f3f7</color>
+    <color name="home">#003fff</color>
+    <color name="like">#C9379D</color>
+    <color name="add">#E6A919</color>
+
 </resources>

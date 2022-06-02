@@ -1,5 +1,17 @@
 <resources>
     <string name="app_name">Happy Places</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Dropdown categories list -->
+    <string-array name="Place_Category">
+        <item>Food &amp; drink</item>
+        <item>Shopping</item>
+        <item>Services</item>
+        <item>Hotels &amp; lodging</item>
+        <item>Outdoors &amp; recreation</item>
+        <item>Religion</item>
+        <item>Office &amp; industrial</item>
+        <item>Residential</item>
+        <item>Education</item>
+    </string-array>
 </resources>

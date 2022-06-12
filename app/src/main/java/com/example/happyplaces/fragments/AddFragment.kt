@@ -2,12 +2,9 @@ package com.example.happyplaces.fragments
 
 import android.Manifest
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -61,7 +58,6 @@ class AddFragment : Fragment(), View.OnClickListener {
         }
 
 
-
     // Save the options selected in category after the fragment has been changed
     override fun onResume() {
         val categories = resources.getStringArray(R.array.Place_Category)
@@ -87,7 +83,7 @@ class AddFragment : Fragment(), View.OnClickListener {
             binding?.etDate?.setText(picker.headerText)
         }
         binding?.etDate?.setOnClickListener(this)
-        binding?.ibUpload?.setOnClickListener(this)
+        binding?.cvUploadPhotoCard?.setOnClickListener(this)
 
         return binding?.root
     }
@@ -98,7 +94,7 @@ class AddFragment : Fragment(), View.OnClickListener {
                 builder.setTheme(R.style.MaterialCalendarTheme)
                 picker.show(parentFragmentManager, picker.toString())
             }
-            R.id.ib_upload -> {
+            R.id.cv_uploadPhotoCard -> {
                 choosePhotoFromGallery()
             }
         }
@@ -170,7 +166,6 @@ class AddFragment : Fragment(), View.OnClickListener {
     }
 
     companion object {
-        private const val GALLERY = 1
     }
 
 }

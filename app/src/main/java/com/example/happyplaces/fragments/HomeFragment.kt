@@ -23,7 +23,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Toast.makeText(context, "Message 2", Toast.LENGTH_LONG).show()
     }
 
     override fun onDestroy() {

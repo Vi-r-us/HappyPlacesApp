@@ -1,115 +1,575 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
-    android:background="@color/background"
     tools:context=".fragments.AddFragment">
 
-    <TextView
-        android:id="@+id/tv_placeDetailsTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:text="Place details"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:textSize="20sp"
-
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_placeDesc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:textSize="15sp"
-        android:text="Provide some information about this place.If this \nplace is added to Maps."
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_placeDetailsTitle" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_placeName"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-77dp">
 
-        app:boxCornerRadiusBottomStart="15dp"
-        app:boxCornerRadiusBottomEnd="15dp"
-        app:boxCornerRadiusTopStart="15dp"
-        app:boxCornerRadiusTopEnd="15dp"
-
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:boxStrokeColor="@color/add"
-        app:hintTextColor="@color/add"
-        android:hint="Place Name"
-
-        android:layout_marginTop="5dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_placeDesc">
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/et_placeName"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/background"
+            android:padding="20dp">
 
-            android:inputType="text" />
+            <TextView
+                android:id="@+id/tv_placeDetailsTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-    </com.google.android.material.textfield.TextInputLayout>
+                android:text="Place details"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_categoryComboBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        app:boxCornerRadiusBottomStart="15dp"
-        app:boxCornerRadiusBottomEnd="15dp"
-        app:boxCornerRadiusTopStart="15dp"
-        app:boxCornerRadiusTopEnd="15dp"
+            <TextView
+                android:id="@+id/tv_placeDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        app:boxStrokeColor="@color/add"
-        app:hintTextColor="@color/add"
-        android:hint="Category"
+                android:text="Provide some information about this place.If this \nplace is added to Maps."
+                android:textSize="15sp"
 
-        android:layout_marginTop="5dp"
-        app:layout_constraintTop_toBottomOf="@id/til_placeName">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_placeDetailsTitle" />
 
-        <AutoCompleteTextView
-            android:id="@+id/actv_category"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="none"/>
+            <!-- Place Name (required) -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_placeName"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
 
-    </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:hint="Place Name"
+                app:boxCornerRadiusBottomEnd="15dp"
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+                app:boxCornerRadiusBottomStart="15dp"
+                app:boxCornerRadiusTopEnd="15dp"
+                app:boxCornerRadiusTopStart="15dp"
 
-        app:boxCornerRadiusBottomStart="15dp"
-        app:boxCornerRadiusBottomEnd="15dp"
-        app:boxCornerRadiusTopStart="15dp"
-        app:boxCornerRadiusTopEnd="15dp"
+                app:boxStrokeColor="@color/add"
+                app:hintTextColor="@color/add"
+                app:layout_constraintTop_toBottomOf="@id/tv_placeDesc"
 
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:boxStrokeColor="@color/add"
-        app:hintTextColor="@color/add"
-        android:hint="Description"
+                app:startIconDrawable="@drawable/ic_round_title_24"
+                app:startIconTint="@color/add">
 
-        android:layout_marginTop="5dp"
-        app:layout_constraintTop_toBottomOf="@id/til_categoryComboBox">
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_placeName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/et_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            </com.google.android.material.textfield.TextInputLayout>
 
-            android:inputType="textLongMessage" />
+            <!-- Category dropdown -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_categoryComboBox"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
 
-    </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:hint="Category"
+                app:boxCornerRadiusBottomEnd="15dp"
+                app:boxCornerRadiusBottomStart="15dp"
+
+                app:boxCornerRadiusTopEnd="15dp"
+                app:boxCornerRadiusTopStart="15dp"
+                app:boxStrokeColor="@color/add"
+                app:hintTextColor="@color/add"
+                app:layout_constraintTop_toBottomOf="@id/til_placeName"
+                app:startIconDrawable="@drawable/ic_round_category_24"
+
+                app:startIconTint="@color/add">
+
+                <AutoCompleteTextView
+                    android:id="@+id/actv_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Description (required) -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_description"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:hint="Description"
+                app:boxCornerRadiusBottomEnd="15dp"
+                app:boxCornerRadiusBottomStart="15dp"
+
+                app:boxCornerRadiusTopEnd="15dp"
+                app:boxCornerRadiusTopStart="15dp"
+                app:boxStrokeColor="@color/add"
+                app:hintTextColor="@color/add"
+                app:layout_constraintTop_toBottomOf="@id/til_categoryComboBox"
+                app:startIconDrawable="@drawable/ic_round_description_24"
+
+                app:startIconTint="@color/add">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapSentences" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Date (required) -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_date"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:hint="Date"
+
+                app:boxCornerRadiusBottomEnd="15dp"
+                app:boxCornerRadiusBottomStart="15dp"
+                app:boxCornerRadiusTopEnd="15dp"
+                app:boxCornerRadiusTopStart="15dp"
+
+                app:boxStrokeColor="@color/add"
+                app:hintTextColor="@color/add"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/til_description"
+
+                app:startIconDrawable="@drawable/ic_round_today_24"
+                app:startIconTint="@color/add">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <!-- Location (required) -->
+            <TextView
+                android:id="@+id/tv_locationTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="20dp"
+                android:text="Location"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/til_date" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_location"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                app:boxCornerRadiusBottomEnd="15dp"
+                app:boxCornerRadiusBottomStart="15dp"
+
+                app:boxCornerRadiusTopEnd="15dp"
+                app:boxCornerRadiusTopStart="15dp"
+                app:boxStrokeColor="@color/add"
+                app:layout_constraintTop_toBottomOf="@id/tv_locationTitle"
+
+                app:startIconDrawable="@drawable/ic_round_location_on_24"
+                app:startIconTint="@color/add">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Exact Address -->
+            <TextView
+                android:id="@+id/tv_addressTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="20dp"
+                android:text="Address"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/til_location" />
+
+            <!-- 1. Street Address -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_streetAddress"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:hint="Street Address"
+                app:boxCornerRadiusBottomEnd="15dp"
+
+                app:boxCornerRadiusBottomStart="15dp"
+                app:boxCornerRadiusTopEnd="15dp"
+                app:boxCornerRadiusTopStart="15dp"
+                app:boxStrokeColor="@color/add"
+
+                app:hintTextColor="@color/add"
+                app:layout_constraintTop_toBottomOf="@id/tv_addressTitle">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_streetAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <!-- 2. Office/Apartment No. -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_apt"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:hint="Office, Suite, Apt."
+                app:boxCornerRadiusBottomEnd="15dp"
+                app:boxCornerRadiusBottomStart="15dp"
+
+                app:boxCornerRadiusTopEnd="15dp"
+                app:boxCornerRadiusTopStart="15dp"
+                app:boxStrokeColor="@color/add"
+                app:hintTextColor="@color/add"
+
+                app:layout_constraintTop_toBottomOf="@id/til_streetAddress">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_apt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- 3. City -->
+            <TextView
+                android:id="@+id/tv_cityTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="20dp"
+                android:text="City"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/til_apt" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_city"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                app:boxCornerRadiusBottomEnd="15dp"
+                app:boxCornerRadiusBottomStart="15dp"
+
+                app:boxCornerRadiusTopEnd="15dp"
+                app:boxCornerRadiusTopStart="15dp"
+
+                app:boxStrokeColor="@color/add"
+                app:layout_constraintEnd_toStartOf="@id/tv_stateTitle"
+                app:layout_constraintStart_toStartOf="@id/tv_cityTitle"
+                app:layout_constraintTop_toBottomOf="@id/tv_cityTitle">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <!-- 4. State -->
+            <TextView
+                android:id="@+id/tv_stateTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="20dp"
+                android:text="State"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+
+                app:layout_constraintEnd_toEndOf="@id/tv_zipTitle"
+                app:layout_constraintStart_toEndOf="@id/tv_cityTitle"
+                app:layout_constraintTop_toBottomOf="@id/til_apt" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_state"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+
+                app:boxCornerRadiusBottomEnd="15dp"
+                app:boxCornerRadiusBottomStart="15dp"
+                app:boxCornerRadiusTopEnd="15dp"
+                app:boxCornerRadiusTopStart="15dp"
+
+                app:boxStrokeColor="@color/add"
+
+                app:layout_constraintEnd_toStartOf="@+id/tv_zipTitle"
+                app:layout_constraintStart_toStartOf="@id/tv_stateTitle"
+                app:layout_constraintTop_toBottomOf="@id/tv_stateTitle">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <!-- 5. Zip -->
+            <TextView
+                android:id="@+id/tv_zipTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="20dp"
+                android:text="Zip"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_stateTitle"
+                app:layout_constraintTop_toBottomOf="@id/til_apt" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_zip"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                app:boxCornerRadiusBottomEnd="15dp"
+                app:boxCornerRadiusBottomStart="15dp"
+
+                app:boxCornerRadiusTopEnd="15dp"
+                app:boxCornerRadiusTopStart="15dp"
+
+                app:boxStrokeColor="@color/add"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tv_zipTitle"
+                app:layout_constraintTop_toBottomOf="@id/tv_zipTitle">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_zip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Rating -->
+            <TextView
+                android:id="@+id/tv_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="20dp"
+                android:text="Rating"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/til_city" />
+            <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:progressDrawable="@drawable/custom_rating_bar"
+                android:stepSize="0.5"
+                android:numStars="5"
+                android:rating="0"
+
+                app:layout_constraintTop_toBottomOf="@id/tv_rating"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <!-- Get Photo -->
+            <TextView
+                android:id="@+id/tv_placePhotoTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="Place photos"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+
+                android:layout_marginTop="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ratingBar" />
+            <TextView
+                android:id="@+id/tv_placePhotosDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="Add helpful photos like storefronts, notices, or signs."
+                android:textSize="15sp"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_placePhotoTitle" />
+
+            <!-- Take Photo from camera -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_takePhotoCard"
+                android:layout_width="172.5dp"
+                android:layout_height="115dp"
+
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="5dp"
+                android:background="@color/white"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="5dp"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/cv_uploadPhotoCard"
+                app:layout_constraintTop_toBottomOf="@id/tv_placePhotosDesc" >
+
+                <LinearLayout
+                    android:id="@+id/ll_camera"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="visible"
+                    android:layout_gravity="center"
+                    android:gravity="center">
+                    <ImageButton
+                        android:id="@+id/ib_camera"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/photo_camera"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="Take Photo"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/iv_placeCameraPhoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:visibility="invisible"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Take Photo from camera -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_uploadPhotoCard"
+                android:layout_width="172.5dp"
+                android:layout_height="115dp"
+
+                android:layout_marginTop="20dp"
+                android:background="@color/white"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="5dp"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/cv_takePhotoCard"
+                app:layout_constraintTop_toBottomOf="@id/tv_placePhotosDesc">
+
+                <LinearLayout
+                    android:id="@+id/ll_upload"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+
+                    android:visibility="visible"
+                    android:layout_gravity="center"
+                    android:gravity="center">
+                    <ImageButton
+                        android:id="@+id/ib_upload"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/upload"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="Upload Photo"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/iv_placeUploadedPhoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:visibility="invisible"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+
+                android:background="@drawable/custom_rounded_save_button"
+                android:backgroundTint="@color/add"
+                android:elevation="5dp"
+
+                android:text="Save"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cv_uploadPhotoCard" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

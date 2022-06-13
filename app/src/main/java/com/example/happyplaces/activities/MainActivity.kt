@@ -1,8 +1,9 @@
-package com.example.happyplaces
+package com.example.happyplaces.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.example.happyplaces.R
 import com.example.happyplaces.fragments.AddFragment
 import com.example.happyplaces.fragments.FavoriteFragment
 import com.example.happyplaces.fragments.HomeFragment
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun replaceFragment(fragment: Fragment) {
+    private fun replaceFragment(fragment: Fragment?) {
         if (fragment != null) {
             val transaction = supportFragmentManager.beginTransaction()
             transaction.replace(R.id.fragment_cntainer, fragment)

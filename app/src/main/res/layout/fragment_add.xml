@@ -61,6 +61,8 @@
 
                 app:boxStrokeColor="@color/add"
                 app:hintTextColor="@color/add"
+                app:helperText=""
+                app:helperTextTextColor="@android:color/holo_red_dark"
                 app:layout_constraintTop_toBottomOf="@id/tv_placeDesc"
 
                 app:startIconDrawable="@drawable/ic_round_title_24"
@@ -107,14 +109,17 @@
                 android:id="@+id/til_description"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-
                 android:layout_height="wrap_content"
+
                 android:hint="Description"
+                app:helperText=""
+                app:helperTextTextColor="@android:color/holo_red_dark"
+
                 app:boxCornerRadiusBottomEnd="15dp"
                 app:boxCornerRadiusBottomStart="15dp"
-
                 app:boxCornerRadiusTopEnd="15dp"
                 app:boxCornerRadiusTopStart="15dp"
+
                 app:boxStrokeColor="@color/add"
                 app:hintTextColor="@color/add"
                 app:layout_constraintTop_toBottomOf="@id/til_categoryComboBox"
@@ -138,6 +143,8 @@
                 android:layout_height="wrap_content"
 
                 android:hint="Date"
+                app:helperText=""
+                app:helperTextTextColor="@android:color/holo_red_dark"
 
                 app:boxCornerRadiusBottomEnd="15dp"
                 app:boxCornerRadiusBottomStart="15dp"
@@ -195,6 +202,9 @@
                 app:boxCornerRadiusTopStart="15dp"
                 app:boxStrokeColor="@color/add"
                 app:layout_constraintTop_toBottomOf="@id/tv_locationTitle"
+
+                app:helperText=""
+                app:helperTextTextColor="@android:color/holo_red_dark"
 
                 app:startIconDrawable="@drawable/ic_round_location_on_24"
                 app:startIconTint="@color/add">
@@ -423,7 +433,7 @@
                 android:progressDrawable="@drawable/custom_rating_bar"
                 android:stepSize="0.5"
                 android:numStars="5"
-                android:rating="0"
+                android:rating="0.0"
 
                 app:layout_constraintTop_toBottomOf="@id/tv_rating"
                 app:layout_constraintStart_toStartOf="parent"
@@ -549,6 +559,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_Save"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"

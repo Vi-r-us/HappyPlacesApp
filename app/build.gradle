@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -49,4 +50,18 @@ dependencies {
     implementation 'com.github.ismaeldivita:chip-navigation-bar:1.4.0'
     /* Dexter */
     implementation 'com.karumi:dexter:6.2.3'
+
+    /* START */
+    def room_version = "2.4.2"
+    def activityVersion = '1.4.0'
+
+    // Room and Lifecycle dependencies
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    // Kotlin extensions for coroutine support with room
+    implementation("androidx.room:room-ktx:$room_version")
+
+    // Kotlin Extensions for Coroutines support with activities
+    implementation "androidx.activity:activity-ktx:$activityVersion"
+    /* END */
 }

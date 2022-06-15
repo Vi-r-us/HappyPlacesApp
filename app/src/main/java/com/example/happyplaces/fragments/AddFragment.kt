@@ -19,7 +19,11 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.example.happyplaces.R
+import com.example.happyplaces.database.PlaceApp
+import com.example.happyplaces.database.PlaceDao
+import com.example.happyplaces.database.PlaceEntity
 import com.example.happyplaces.databinding.FragmentAddBinding
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -28,6 +32,7 @@ import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -41,6 +46,10 @@ class AddFragment : Fragment(), View.OnClickListener {
     private val builder: MaterialDatePicker.Builder<*> = MaterialDatePicker.Builder.datePicker()
     private val picker: MaterialDatePicker<*> = builder.build()
 
+    private var saveImageToInternalStorage: Uri? = null
+    private var mLatitude: Double = 0.0
+    private var mLongitude: Double = 0.0
+
     // Gallery Intent
     private var galleryImageResultLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -52,7 +61,7 @@ class AddFragment : Fragment(), View.OnClickListener {
                         val selectedImageBitmap = MediaStore.Images.Media.getBitmap(
                             requireActivity().contentResolver, contentUri)
 
-                        val saveImageToInternalStorage = saveImageToInternalStorage(selectedImageBitmap)
+                        saveImageToInternalStorage = saveImageToInternalStorage(selectedImageBitmap)
                         Log.e("Saved Image: ", "Path :: $saveImageToInternalStorage")
 
                         binding?.ivPlaceUploadedPhoto?.setImageBitmap(selectedImageBitmap)
@@ -73,7 +82,7 @@ class AddFragment : Fragment(), View.OnClickListener {
                 val data: Intent? = result.data
                 val thumbnail : Bitmap = data!!.extras!!.get("data") as Bitmap
 
-                val saveImageToInternalStorage = saveImageToInternalStorage(thumbnail)
+                saveImageToInternalStorage = saveImageToInternalStorage(thumbnail)
                 Log.e("Saved Image: ", "Path :: $saveImageToInternalStorage")
 
                 binding?.ivPlaceCameraPhoto?.setImageBitmap(thumbnail)
@@ -112,6 +121,7 @@ class AddFragment : Fragment(), View.OnClickListener {
         binding?.etDate?.setOnClickListener(this)
         binding?.cvUploadPhotoCard?.setOnClickListener(this)
         binding?.cvTakePhotoCard?.setOnClickListener(this)
+        binding?.btnSave?.setOnClickListener(this)
 
         return binding?.root
     }
@@ -128,6 +138,62 @@ class AddFragment : Fragment(), View.OnClickListener {
             R.id.cv_takePhotoCard -> {
                 takePhotoFromCamera()
             }
+            R.id.btn_Save -> {
+                // Remove required text
+                binding?.tilPlaceName?.helperText = ""
+                binding?.tilDescription?.helperText = ""
+                binding?.tilLocation?.helperText = ""
+                binding?.tilDate?.helperText = ""
+
+                when {
+                    binding?.etPlaceName?.text.isNullOrEmpty() -> {
+                        binding?.tilPlaceName?.helperText = "Required"
+                    }
+                    binding?.etDescription?.text.isNullOrEmpty() -> {
+                        binding?.tilDescription?.helperText = "Required"
+                    }
+                    binding?.etLocation?.text.isNullOrEmpty() -> {
+                        binding?.tilLocation?.helperText = "Required"
+                    }
+                    binding?.etDate?.text.isNullOrEmpty() -> {
+                        binding?.tilDate?.helperText = "Required"
+                    }
+                    saveImageToInternalStorage == null -> {
+                        Toast.makeText(requireContext(), "Require a Image",
+                            Toast.LENGTH_LONG).show()
+                    } else -> {
+                        val placeDao = (requireActivity().application as PlaceApp).db.placeDao()
+                        addRecord(placeDao)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun addRecord(placeDao: PlaceDao) {
+        lifecycleScope.launch {
+            placeDao.insert( PlaceEntity(
+                // Mandatory Fields
+                title = binding?.etPlaceName?.text.toString(),
+                date = binding?.etDate?.text.toString(),
+                description = binding?.etDescription?.text.toString(),
+                location = binding?.etLocation?.text.toString(),
+                image = saveImageToInternalStorage.toString(),
+                latitude = mLatitude,
+                longitude = mLongitude,
+
+                // Not-Mandatory Fields
+                category = binding?.actvCategory?.text.toString(),
+                rating = binding?.ratingBar?.rating!!.toFloat(),
+                streetAddress1 = binding?.etStreetAddress?.text.toString(),
+                streetAddress2 = binding?.etApt?.text.toString(),
+                city = binding?.etCity?.text.toString(),
+                state = binding?.etState?.text.toString(),
+                zip = binding?.etZip?.text.toString()
+
+            ) )
+            Toast.makeText(requireContext(),
+                "Record Saved", Toast.LENGTH_LONG).show()
         }
     }
 

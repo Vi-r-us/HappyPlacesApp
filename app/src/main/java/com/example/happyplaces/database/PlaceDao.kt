@@ -7,18 +7,21 @@ import kotlinx.coroutines.flow.Flow
 interface PlaceDao {
 
     @Insert
-    suspend fun insert(placeEntity: PlaceEntity)
+    fun insert(placeEntity: PlaceEntity)
 
     @Delete
-    suspend fun delete(placeEntity: PlaceEntity)
+    fun delete(placeEntity: PlaceEntity)
 
     @Update
-    suspend fun update(placeEntity: PlaceEntity)
+    fun update(placeEntity: PlaceEntity)
 
     @Query("SELECT * FROM `places-table`")
-    fun fetchAllHistory(): Flow<List<PlaceEntity>>
+    fun fetchAllPlaces(): Flow<List<PlaceEntity>>
 
     @Query("DELETE FROM `places-table`")
-    suspend fun deleteAllHistory()
+    fun deleteAllPlaces()
+
+    @Query("SELECT * FROM `places-table` where id=:id")
+    fun fetchPlaceById(id: Int): Flow<PlaceEntity>
 
 }

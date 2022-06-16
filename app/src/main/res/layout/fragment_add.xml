@@ -8,11 +8,10 @@
     tools:context=".fragments.AddFragment">
 
     <ScrollView
+        android:id="@+id/sv_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-77dp">
+        android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -52,7 +51,7 @@
 
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:hint="Place Name"
+                android:hint="Place Name (required)*"
                 app:boxCornerRadiusBottomEnd="15dp"
 
                 app:boxCornerRadiusBottomStart="15dp"
@@ -111,7 +110,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:hint="Description"
+                android:hint="Description (required)*"
                 app:helperText=""
                 app:helperTextTextColor="@android:color/holo_red_dark"
 
@@ -131,7 +130,7 @@
                     android:id="@+id/et_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapSentences" />
+                    android:inputType="textMultiLine" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -142,7 +141,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:hint="Date"
+                android:hint="Date (required)*"
                 app:helperText=""
                 app:helperTextTextColor="@android:color/holo_red_dark"
 
@@ -171,6 +170,110 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Contacts -->
+            <TextView
+                android:id="@+id/tv_contactTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="20dp"
+                android:text="Contact"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/til_date" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_phoneNumber"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:boxCornerRadiusBottomEnd="15dp"
+                app:boxCornerRadiusBottomStart="15dp"
+
+                app:boxCornerRadiusTopEnd="15dp"
+                app:boxCornerRadiusTopStart="15dp"
+                app:boxStrokeColor="@color/add"
+                app:layout_constraintTop_toBottomOf="@id/tv_contactTitle"
+
+                android:hint="Phone Number"
+                app:hintTextColor="@color/add"
+                app:helperText=""
+                app:helperTextTextColor="@android:color/holo_red_dark"
+
+                app:startIconDrawable="@drawable/ic_round_phone_24"
+                app:startIconTint="@color/add">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_phoneNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_website"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:boxCornerRadiusBottomEnd="15dp"
+                app:boxCornerRadiusBottomStart="15dp"
+
+                app:boxCornerRadiusTopEnd="15dp"
+                app:boxCornerRadiusTopStart="15dp"
+                app:boxStrokeColor="@color/add"
+                app:layout_constraintTop_toBottomOf="@id/til_phoneNumber"
+
+                android:hint="Website"
+                app:hintTextColor="@color/add"
+                app:helperText=""
+                app:helperTextTextColor="@android:color/holo_red_dark"
+
+                app:startIconDrawable="@drawable/ic_baseline_web_24"
+                app:startIconTint="@color/add">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_website"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_email"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:boxCornerRadiusBottomEnd="15dp"
+                app:boxCornerRadiusBottomStart="15dp"
+
+                app:boxCornerRadiusTopEnd="15dp"
+                app:boxCornerRadiusTopStart="15dp"
+                app:boxStrokeColor="@color/add"
+                app:layout_constraintTop_toBottomOf="@id/til_website"
+
+                android:hint="Email Address"
+                app:hintTextColor="@color/add"
+                app:helperText=""
+                app:helperTextTextColor="@android:color/holo_red_dark"
+
+                app:startIconDrawable="@drawable/ic_round_email_24"
+                app:startIconTint="@color/add">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Location (required) -->
             <TextView
@@ -185,7 +288,7 @@
                 android:textStyle="bold"
 
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/til_date" />
+                app:layout_constraintTop_toBottomOf="@id/til_email" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_location"
@@ -213,7 +316,7 @@
                     android:id="@+id/et_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number" />
+                    android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -430,7 +533,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:progressDrawable="@drawable/custom_rating_bar"
+                android:progressDrawable="@drawable/custom_rating_bar_48"
                 android:stepSize="0.5"
                 android:numStars="5"
                 android:rating="0.0"

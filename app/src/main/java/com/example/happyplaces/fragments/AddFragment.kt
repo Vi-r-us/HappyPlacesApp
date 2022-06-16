@@ -148,15 +148,19 @@ class AddFragment : Fragment(), View.OnClickListener {
                 when {
                     binding?.etPlaceName?.text.isNullOrEmpty() -> {
                         binding?.tilPlaceName?.helperText = "Required"
+                        binding?.svMain?.smoothScrollTo(0,0)
                     }
                     binding?.etDescription?.text.isNullOrEmpty() -> {
                         binding?.tilDescription?.helperText = "Required"
+                        binding?.svMain?.smoothScrollTo(0,0)
                     }
                     binding?.etLocation?.text.isNullOrEmpty() -> {
                         binding?.tilLocation?.helperText = "Required"
+                        binding?.svMain?.smoothScrollTo(0,0)
                     }
                     binding?.etDate?.text.isNullOrEmpty() -> {
                         binding?.tilDate?.helperText = "Required"
+                        binding?.svMain?.smoothScrollTo(0,0)
                     }
                     saveImageToInternalStorage == null -> {
                         Toast.makeText(requireContext(), "Require a Image",
@@ -190,6 +194,7 @@ class AddFragment : Fragment(), View.OnClickListener {
                 city = binding?.etCity?.text.toString(),
                 state = binding?.etState?.text.toString(),
                 zip = binding?.etZip?.text.toString()
+
 
             ) )
             Toast.makeText(requireContext(),

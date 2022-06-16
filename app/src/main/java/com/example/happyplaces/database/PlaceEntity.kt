@@ -21,8 +21,12 @@ data class PlaceEntity(
     val category: String = "",
     val streetAddress1: String = "",
     val streetAddress2: String = "",
+//    val phoneNumber: String = "",
+//    val emailAddress: String = "",
+//    val website: String = "",
     val city: String = "",
     val state: String = "",
     val zip: String = "",
     val rating: Float = 0.0f,
+    val isFavorite: Int = 0
 )

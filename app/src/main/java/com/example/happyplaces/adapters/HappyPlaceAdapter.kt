@@ -1,6 +1,8 @@
 package com.example.happyplaces.adapters
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -12,6 +14,8 @@ open class HappyPlaceAdapter (
     private val context: Context,
     private val items: ArrayList<PlaceEntity>
 ) : RecyclerView.Adapter<HappyPlaceAdapter.ViewHolder>() {
+
+    private var onClickListener: OnClickListener? = null
 
     class ViewHolder(binding: ItemHappyPlaceBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -33,14 +37,35 @@ open class HappyPlaceAdapter (
         val item = items[position]
 
         holder.rivAvatar.setImageURI(Uri.parse(item.image))
-        holder.tvTitle.text = item.title
+        if (item.title!!.length > 16)
+            holder.tvTitle.text = item.title?.substring(0,16) + "..."
+        else
+            holder.tvTitle.text = item.title
         holder.ratingBar.rating = item.rating
         holder.rating.text = item.rating.toString()
+
+        holder.itemView.setOnClickListener {
+            if(onClickListener != null) {
+                onClickListener!!.onClick(position, item)
+            }
+        }
 
     }
 
     override fun getItemCount(): Int {
         return items.size
+    }
+
+    fun notifyEditItem(activity: Activity, position: Int, requestCode: Int) {
+
+    }
+
+    fun setOnClickListener(onClickListener: OnClickListener) {
+        this.onClickListener = onClickListener
+    }
+
+    interface OnClickListener {
+        fun onClick(position: Int, model: PlaceEntity)
     }
 
 }

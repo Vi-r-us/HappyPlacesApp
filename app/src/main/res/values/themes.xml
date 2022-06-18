@@ -58,4 +58,11 @@
         <item name="android:colorAccent">@color/black</item>
     </style>
 
+    <!-- App theme for detail page -->
+    <style name="Theme.AppCompat.N">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+    
 </resources>

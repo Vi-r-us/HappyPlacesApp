@@ -32,6 +32,7 @@ import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
@@ -175,7 +176,7 @@ class AddFragment : Fragment(), View.OnClickListener {
     }
 
     private fun addRecord(placeDao: PlaceDao) {
-        lifecycleScope.launch {
+        lifecycleScope.launch(Dispatchers.IO) {
             placeDao.insert( PlaceEntity(
                 // Mandatory Fields
                 title = binding?.etPlaceName?.text.toString(),
@@ -191,15 +192,17 @@ class AddFragment : Fragment(), View.OnClickListener {
                 rating = binding?.ratingBar?.rating!!.toFloat(),
                 streetAddress1 = binding?.etStreetAddress?.text.toString(),
                 streetAddress2 = binding?.etApt?.text.toString(),
-                city = binding?.etCity?.text.toString(),
+                country = binding?.etCountry?.text.toString(),
                 state = binding?.etState?.text.toString(),
-                zip = binding?.etZip?.text.toString()
-
+                zip = binding?.etZip?.text.toString(),
+                phoneNumber = binding?.etPhoneNumber?.text.toString(),
+                emailAddress = binding?.etEmail?.text.toString(),
+                website = binding?.etWebsite?.text.toString()
 
             ) )
-            Toast.makeText(requireContext(),
-                "Record Saved", Toast.LENGTH_LONG).show()
         }
+        Toast.makeText(requireContext(),
+            "Record Saved", Toast.LENGTH_LONG).show()
     }
 
     private fun choosePhotoFromGallery() {

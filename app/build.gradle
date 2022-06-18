@@ -58,6 +58,7 @@ dependencies {
     implementation 'com.karumi:dexter:6.2.3'
     /* Rounded Corner ImageView */
     implementation 'com.makeramen:roundedimageview:2.3.0'
+    /* Collapsing Toolbar */
 
     /* START */
     def room_version = "2.4.2"

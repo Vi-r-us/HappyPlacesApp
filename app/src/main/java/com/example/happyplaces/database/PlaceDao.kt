@@ -18,8 +18,8 @@ interface PlaceDao {
     @Query("SELECT * FROM `places-table`")
     fun fetchAllPlaces(): Flow<List<PlaceEntity>>
 
-    @Query("DELETE FROM `places-table`")
-    fun deleteAllPlaces()
+    @Query("SELECT * FROM `places-table` ORDER BY id DESC LIMIT 1")
+    fun getLastInsertedPlace(): Flow<PlaceEntity>
 
     @Query("SELECT * FROM `places-table` where id=:id")
     fun fetchPlaceById(id: Int): Flow<PlaceEntity>

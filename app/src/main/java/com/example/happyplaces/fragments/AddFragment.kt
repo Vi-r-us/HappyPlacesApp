@@ -21,6 +21,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.happyplaces.R
+import com.example.happyplaces.activities.HappyPlaceDetailActivity
 import com.example.happyplaces.database.PlaceApp
 import com.example.happyplaces.database.PlaceDao
 import com.example.happyplaces.database.PlaceEntity
@@ -33,6 +34,7 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
@@ -50,6 +52,8 @@ class AddFragment : Fragment(), View.OnClickListener {
     private var saveImageToInternalStorage: Uri? = null
     private var mLatitude: Double = 0.0
     private var mLongitude: Double = 0.0
+
+    private var mPlaceDetail: PlaceEntity? = null
 
     // Gallery Intent
     private var galleryImageResultLauncher: ActivityResultLauncher<Intent> =
@@ -115,6 +119,14 @@ class AddFragment : Fragment(), View.OnClickListener {
         window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.add)
         window.navigationBarColor = ContextCompat.getColor(requireContext(), R.color.add)
 
+        // Get Place Detail for update
+        mPlaceDetail = arguments?.getParcelable(HomeFragment.EXTRA_PLACE_DETAILS) as PlaceEntity?
+
+        if (mPlaceDetail != null) {
+            setAllEditText(mPlaceDetail!!)
+            binding?.btnSave?.text = "Update"
+        }
+
         picker.addOnPositiveButtonClickListener {
             binding?.etDate?.setText(picker.headerText)
         }
@@ -125,6 +137,32 @@ class AddFragment : Fragment(), View.OnClickListener {
         binding?.btnSave?.setOnClickListener(this)
 
         return binding?.root
+    }
+
+    private fun setAllEditText(mPlaceDetail: PlaceEntity) {
+        // Mandatory Fields
+        binding?.etPlaceName?.setText(mPlaceDetail.title)
+        binding?.etDate?.setText(mPlaceDetail.date)
+        binding?.etDescription?.setText(mPlaceDetail.description)
+        binding?.etLocation?.setText(mPlaceDetail.location)
+        mLatitude = mPlaceDetail.latitude
+        mLongitude = mPlaceDetail.longitude
+
+        saveImageToInternalStorage = Uri.parse(mPlaceDetail.image)
+        binding?.ivPlaceUploadedPhoto?.setImageURI(saveImageToInternalStorage)
+        binding?.ivPlaceUploadedPhoto?.visibility = View.VISIBLE
+
+        // Not-Mandatory Fields
+        binding?.actvCategory?.setText(mPlaceDetail.category)
+        binding?.ratingBar?.rating = mPlaceDetail.rating
+        binding?.etStreetAddress?.setText(mPlaceDetail.streetAddress1)
+        binding?.etApt?.setText(mPlaceDetail.streetAddress2)
+        binding?.etCountry?.setText(mPlaceDetail.country)
+        binding?.etState?.setText(mPlaceDetail.state)
+        binding?.etZip?.setText(mPlaceDetail.zip)
+        binding?.etPhoneNumber?.setText(mPlaceDetail.phoneNumber)
+        binding?.etEmail?.setText(mPlaceDetail.emailAddress)
+        binding?.etWebsite?.setText(mPlaceDetail.website)
     }
 
     override fun onClick(v: View?) {
@@ -168,11 +206,53 @@ class AddFragment : Fragment(), View.OnClickListener {
                             Toast.LENGTH_LONG).show()
                     } else -> {
                         val placeDao = (requireActivity().application as PlaceApp).db.placeDao()
-                        addRecord(placeDao)
+                        if (mPlaceDetail == null)
+                            addRecord(placeDao)
+                        else
+                            updateRecord(placeDao, mPlaceDetail!!)
+
+                        // Going to detail page of the Place
+                        if (mPlaceDetail != null) {
+                            val intent = Intent(requireContext(), HappyPlaceDetailActivity::class.java)
+                            intent.putExtra(HomeFragment.EXTRA_PLACE_DETAILS, mPlaceDetail)
+                            startActivity(intent)
+                            requireActivity().finish()
+                        }
                     }
                 }
             }
         }
+    }
+
+    private fun updateRecord(placeDao: PlaceDao, placeEntity: PlaceEntity) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            placeDao.update( PlaceEntity(
+                // Mandatory Fields
+                id = placeEntity.id,
+                title = binding?.etPlaceName?.text.toString(),
+                date = binding?.etDate?.text.toString(),
+                description = binding?.etDescription?.text.toString(),
+                location = binding?.etLocation?.text.toString(),
+                image = saveImageToInternalStorage.toString(),
+                latitude = mLatitude,
+                longitude = mLongitude,
+
+                // Not-Mandatory Fields
+                category = binding?.actvCategory?.text.toString(),
+                rating = binding?.ratingBar?.rating!!.toFloat(),
+                streetAddress1 = binding?.etStreetAddress?.text.toString(),
+                streetAddress2 = binding?.etApt?.text.toString(),
+                country = binding?.etCountry?.text.toString(),
+                state = binding?.etState?.text.toString(),
+                zip = binding?.etZip?.text.toString(),
+                phoneNumber = binding?.etPhoneNumber?.text.toString(),
+                emailAddress = binding?.etEmail?.text.toString(),
+                website = binding?.etWebsite?.text.toString(),
+                isFavorite = placeEntity.isFavorite
+            ) )
+        }
+        Toast.makeText(requireContext(),
+            "Record Updated", Toast.LENGTH_LONG).show()
     }
 
     private fun addRecord(placeDao: PlaceDao) {
@@ -198,8 +278,11 @@ class AddFragment : Fragment(), View.OnClickListener {
                 phoneNumber = binding?.etPhoneNumber?.text.toString(),
                 emailAddress = binding?.etEmail?.text.toString(),
                 website = binding?.etWebsite?.text.toString()
-
             ) )
+
+            placeDao.getLastInsertedPlace().collect {
+                mPlaceDetail = it
+            }
         }
         Toast.makeText(requireContext(),
             "Record Saved", Toast.LENGTH_LONG).show()

@@ -20,6 +20,9 @@
         <!-- Default Font for app -->
         <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
         <item name="android:buttonStyle">@style/RobotoButtonStyle</item>
+
+        <!-- Snack-bar button bold -->
+        <item name="snackbarButtonStyle">@style/snackbar_button</item>
     </style>
 
     <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
@@ -64,5 +67,14 @@
         <item name="windowNoTitle">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
-    
+
+    <!-- Snack-bar button theme -->
+    <style name="snackbar_button" parent="@style/Widget.MaterialComponents.Button.TextButton.Snackbar">
+        <item name="android:textAppearance">@style/snackbar_button_textappearance</item>
+    </style>
+
+    <style name="snackbar_button_textappearance"  parent="@style/TextAppearance.MaterialComponents.Button">
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

@@ -1,9 +1,11 @@
 package com.example.happyplaces.activities
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.happyplaces.R
@@ -23,6 +25,7 @@ class HappyPlaceDetailActivity : AppCompatActivity() {
         binding?.collapsingToolbar?.setExpandedTitleTypeface(
             Typeface.create(binding?.collapsingToolbar?.getExpandedTitleTypeface(),
                 Typeface.BOLD))
+
         var happyPlaceDetailModel: PlaceEntity? = null
         if (intent.hasExtra(HomeFragment.EXTRA_PLACE_DETAILS)) {
             happyPlaceDetailModel =
@@ -36,6 +39,7 @@ class HappyPlaceDetailActivity : AppCompatActivity() {
                 onBackPressed()
             }
 
+            Log.e("Tag: ", "Got Entity")
             setValues(happyPlaceDetailModel)
         }
 
@@ -111,27 +115,27 @@ class HappyPlaceDetailActivity : AppCompatActivity() {
             && place.country!!.isNotBlank()
             && place.zip!!.isNotBlank())
             binding?.thirdAddress?.text = "${place.state}-${place.zip}, ${place.country}"
-        else if (place.state!!.isNotBlank()
+        else if (place.state.isNotBlank()
                 && place.country!!.isNotBlank()
                 && place.zip!!.isBlank())
             binding?.thirdAddress?.text = "${place.state}, ${place.country}"
-        else if(place.state!!.isNotBlank()
+        else if(place.state.isNotBlank()
                 && place.country!!.isBlank()
                 && place.zip!!.isNotBlank())
             binding?.thirdAddress?.text = "${place.state}-${place.zip}"
-        else if (place.state!!.isBlank()
+        else if (place.state.isBlank()
                 && place.country!!.isNotBlank()
                 && place.zip!!.isNotBlank())
             binding?.thirdAddress?.text = "${place.zip}, ${place.country}"
-        else if (place.state!!.isNotBlank()
+        else if (place.state.isNotBlank()
                 && place.country!!.isBlank()
                 && place.zip!!.isBlank())
             binding?.thirdAddress?.text = "${place.state}"
-        else if (place.state!!.isBlank()
+        else if (place.state.isBlank()
             && place.country!!.isNotBlank()
             && place.zip!!.isBlank())
             binding?.thirdAddress?.text = "${place.country}"
-        else if (place.state!!.isBlank()
+        else if (place.state.isBlank()
             && place.country!!.isBlank()
             && place.zip!!.isNotBlank())
             binding?.thirdAddress?.text = "${place.zip}"
@@ -168,6 +172,18 @@ class HappyPlaceDetailActivity : AppCompatActivity() {
             "Residential" -> R.drawable.residential
             else -> R.drawable.education
         }
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+        super.onBackPressed()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
     }
 
 }

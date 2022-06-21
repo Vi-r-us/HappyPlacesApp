@@ -24,4 +24,7 @@ interface PlaceDao {
     @Query("SELECT * FROM `places-table` where id=:id")
     fun fetchPlaceById(id: Int): Flow<PlaceEntity>
 
+    @Query("SELECT * FROM `places-table` where isFavorite=1")
+    fun getFavoritePlaces(): Flow<List<PlaceEntity>>
+
 }

@@ -3,7 +3,9 @@ package com.example.happyplaces.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.example.happyplaces.R
+import com.example.happyplaces.database.PlaceEntity
 import com.example.happyplaces.fragments.AddFragment
 import com.example.happyplaces.fragments.FavoriteFragment
 import com.example.happyplaces.fragments.HomeFragment
@@ -27,6 +29,25 @@ class MainActivity : AppCompatActivity() {
                     R.id.like -> replaceFragment(favoriteFragment)
                 }
         }
+
+        if (intent.hasExtra(HomeFragment.EXTRA_PLACE_DETAILS)) {
+            goToAddFragmentForEdit(intent.getParcelableExtra<PlaceEntity>(HomeFragment.EXTRA_PLACE_DETAILS))
+        }
+    }
+
+    private fun goToAddFragmentForEdit(happyPlaceDetailModel: PlaceEntity?) {
+        val fragment: Fragment = AddFragment()
+        val manager: FragmentManager = supportFragmentManager
+        val bundle = Bundle()
+
+        bundle.putInt("REQUEST_CODE", HomeFragment.ADD_PLACE_ACTIVITY_REQUEST_CODE)
+        bundle.putParcelable(HomeFragment.EXTRA_PLACE_DETAILS, happyPlaceDetailModel)
+        fragment.arguments = bundle
+
+        val transaction =  manager.beginTransaction()
+        transaction.replace(R.id.fragment_cntainer, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 
     private fun replaceFragment(fragment: Fragment?) {

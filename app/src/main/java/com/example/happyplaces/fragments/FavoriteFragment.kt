@@ -7,8 +7,16 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
 import com.example.happyplaces.R
+import com.example.happyplaces.adapters.FavoritePlaceAdapter
+import com.example.happyplaces.database.PlaceApp
 import com.example.happyplaces.databinding.FragmentFavoriteBinding
+import com.example.happyplaces.utils.CenterZoom
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class FavoriteFragment : Fragment() {
 
@@ -25,6 +33,27 @@ class FavoriteFragment : Fragment() {
         val window: Window = requireActivity().window
         window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.like)
         window.navigationBarColor = ContextCompat.getColor(requireContext(), R.color.like)
+
+        // Recycler View
+        val layoutManager = CenterZoom(requireContext())
+        layoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        layoutManager.reverseLayout = true
+        layoutManager.stackFromEnd = true
+        binding?.rvList?.layoutManager = layoutManager
+
+        // Auto Centre View
+        val snapHelper = LinearSnapHelper()
+        snapHelper.attachToRecyclerView(binding?.rvList)
+        binding?.rvList?.isNestedScrollingEnabled = false
+
+        // Add Item
+        val placeDao = (requireActivity().application as PlaceApp).db.placeDao()
+        lifecycleScope.launch {
+            placeDao.getFavoritePlaces().collect {
+                val list = ArrayList(it)
+                binding?.rvList?.adapter = FavoritePlaceAdapter(requireContext(), list)
+            }
+        }
 
         return binding?.root
     }

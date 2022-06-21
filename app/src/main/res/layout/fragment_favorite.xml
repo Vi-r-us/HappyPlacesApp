@@ -4,21 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/like"
+    android:background="@color/background"
     tools:context=".fragments.FavoriteFragment">
 
     <TextView
+        android:id="@+id/tv_heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
         android:fontFamily="sans-serif"
-
-        android:text="@string/hello_blank_fragment"
-        android:textColor="@color/white"
+        android:text="Favorites"
+        android:textColor="@color/black"
         android:textSize="30sp"
+        android:textStyle="bold"
 
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_List"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+
+        tools:listitem="@layout/item_favorite_place"
+        tools:itemCount="5"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_heading"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

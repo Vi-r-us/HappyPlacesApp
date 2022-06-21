@@ -5,12 +5,14 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.example.happyplaces.R
 import com.example.happyplaces.database.PlaceEntity
 import com.example.happyplaces.databinding.ActivityHappyPlaceDetailBinding
+import com.example.happyplaces.fragments.AddFragment
 import com.example.happyplaces.fragments.HomeFragment
 
 class HappyPlaceDetailActivity : AppCompatActivity() {
@@ -23,8 +25,7 @@ class HappyPlaceDetailActivity : AppCompatActivity() {
         setContentView(binding?.root)
 
         binding?.collapsingToolbar?.setExpandedTitleTypeface(
-            Typeface.create(binding?.collapsingToolbar?.getExpandedTitleTypeface(),
-                Typeface.BOLD))
+            Typeface.create(binding?.collapsingToolbar?.getExpandedTitleTypeface(), Typeface.BOLD))
 
         var happyPlaceDetailModel: PlaceEntity? = null
         if (intent.hasExtra(HomeFragment.EXTRA_PLACE_DETAILS)) {
@@ -39,8 +40,14 @@ class HappyPlaceDetailActivity : AppCompatActivity() {
                 onBackPressed()
             }
 
-            Log.e("Tag: ", "Got Entity")
             setValues(happyPlaceDetailModel)
+        }
+
+        binding?.fabEdit?.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra(HomeFragment.EXTRA_PLACE_DETAILS, happyPlaceDetailModel)
+            startActivity(intent)
+            finish()
         }
 
     }

@@ -22,12 +22,14 @@
         <entry key="..\:/NOTES_AND_STUFF/AppProjects/HappyPlaces/app/src/main/res/drawable/ratingbar_empty.xml" value="0.25" />
         <entry key="..\:/NOTES_AND_STUFF/AppProjects/HappyPlaces/app/src/main/res/drawable/ratingbar_filled.xml" value="0.2495" />
         <entry key="..\:/NOTES_AND_STUFF/AppProjects/HappyPlaces/app/src/main/res/drawable/ratingbar_half.xml" value="0.302" />
+        <entry key="..\:/NOTES_AND_STUFF/AppProjects/HappyPlaces/app/src/main/res/drawable/searchview_background.xml" value="0.3205" />
         <entry key="..\:/NOTES_AND_STUFF/AppProjects/HappyPlaces/app/src/main/res/layout/activity_happy_place_detail.xml" value="0.25" />
         <entry key="..\:/NOTES_AND_STUFF/AppProjects/HappyPlaces/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/NOTES_AND_STUFF/AppProjects/HappyPlaces/app/src/main/res/layout/dropdown_item.xml" value="0.22" />
         <entry key="..\:/NOTES_AND_STUFF/AppProjects/HappyPlaces/app/src/main/res/layout/fragment_add.xml" value="0.25" />
-        <entry key="..\:/NOTES_AND_STUFF/AppProjects/HappyPlaces/app/src/main/res/layout/fragment_favorite.xml" value="0.35260416666666666" />
-        <entry key="..\:/NOTES_AND_STUFF/AppProjects/HappyPlaces/app/src/main/res/layout/fragment_home.xml" value="0.33" />
+        <entry key="..\:/NOTES_AND_STUFF/AppProjects/HappyPlaces/app/src/main/res/layout/fragment_favorite.xml" value="0.25" />
+        <entry key="..\:/NOTES_AND_STUFF/AppProjects/HappyPlaces/app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="..\:/NOTES_AND_STUFF/AppProjects/HappyPlaces/app/src/main/res/layout/item_favorite_place.xml" value="0.25" />
         <entry key="..\:/NOTES_AND_STUFF/AppProjects/HappyPlaces/app/src/main/res/layout/item_happy_place.xml" value="0.25" />
         <entry key="..\:/NOTES_AND_STUFF/AppProjects/HappyPlaces/app/src/main/res/layout/layout_bg_detail_page.xml" value="0.27421875" />
         <entry key="..\:/NOTES_AND_STUFF/AppProjects/HappyPlaces/app/src/main/res/menu/bottom_nav_menu.xml" value="0.36666666666666664" />

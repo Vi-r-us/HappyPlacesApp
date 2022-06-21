@@ -218,6 +218,7 @@ class AddFragment : Fragment(), View.OnClickListener {
                             startActivity(intent)
                             requireActivity().finish()
                         }
+                        mPlaceDetail = null
                     }
                 }
             }

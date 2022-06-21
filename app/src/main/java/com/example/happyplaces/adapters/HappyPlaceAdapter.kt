@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
@@ -20,7 +21,7 @@ import kotlinx.coroutines.launch
 
 open class HappyPlaceAdapter (
     private val context: Context,
-    private val items: ArrayList<PlaceEntity>,
+    private var items: ArrayList<PlaceEntity>,
     private val updateListener: (item:PlaceEntity)->Unit
 ) : RecyclerView.Adapter<HappyPlaceAdapter.ViewHolder>() {
 
@@ -76,6 +77,10 @@ open class HappyPlaceAdapter (
 
     fun removeAt(position: Int, placeDao: PlaceDao): ArrayList<PlaceEntity> {
         return items
+    }
+
+    fun setFilteredList(filteredList: ArrayList<PlaceEntity>) {
+        items = filteredList
     }
 
     fun notifyEditItem(activity: Activity, position: Int, requestCode: Int) {

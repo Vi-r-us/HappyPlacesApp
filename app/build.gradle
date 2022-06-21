@@ -58,7 +58,9 @@ dependencies {
     implementation 'com.karumi:dexter:6.2.3'
     /* Rounded Corner ImageView */
     implementation 'com.makeramen:roundedimageview:2.3.0'
-    /* Collapsing Toolbar */
+    /* For Animating Favorite Screen's recycler-view */
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.flaviofaria:kenburnsview:1.0.7'
 
     /* START */
     def room_version = "2.4.2"

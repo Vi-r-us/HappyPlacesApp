@@ -192,6 +192,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
 
                 app:boxCornerRadiusBottomEnd="15dp"
                 app:boxCornerRadiusBottomStart="15dp"
@@ -302,7 +303,6 @@
                 android:layout_height="wrap_content"
 
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="10dp"
                 app:boxCornerRadiusBottomEnd="15dp"
                 app:boxCornerRadiusBottomStart="15dp"
 
@@ -503,7 +503,6 @@
                 android:layout_height="wrap_content"
 
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="10dp"
                 app:boxCornerRadiusBottomEnd="15dp"
                 app:boxCornerRadiusBottomStart="15dp"
 

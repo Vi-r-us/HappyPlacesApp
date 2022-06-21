@@ -4,10 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -29,7 +31,8 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-
+import java.util.*
+import kotlin.collections.ArrayList
 
 class HomeFragment : Fragment() {
 
@@ -52,6 +55,7 @@ class HomeFragment : Fragment() {
         lifecycleScope.launch {
             placeDao.fetchAllPlaces().collect {
                 val list = ArrayList(it)
+                list.reverse()
                 setupHappyPlacesListIntoAdapter(list, placeDao)
             }
         }
@@ -59,17 +63,50 @@ class HomeFragment : Fragment() {
         return binding?.root
     }
 
+    private fun setupSearchViewAdapter(
+        placesList: ArrayList<PlaceEntity>,
+        placeDao: PlaceDao,
+        itemAdapter: HappyPlaceAdapter
+    ) {
+        binding?.svSearchbar?.clearFocus()
+        binding?.svSearchbar?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                val filteredPlaceList = ArrayList<PlaceEntity>()
+
+                placesList.forEach {
+                    if (it.title!!.lowercase(Locale.getDefault())!!
+                            .contains(newText!!.lowercase(Locale.getDefault())))
+                        filteredPlaceList.add(it)
+                }
+
+                if (filteredPlaceList.isNotEmpty())
+                    itemAdapter.setFilteredList(filteredPlaceList)
+                else
+                    Toast.makeText(requireContext(), "Data Not Found", Toast.LENGTH_SHORT).show()
+                itemAdapter.notifyDataSetChanged()
+                return false
+            }
+        })
+
+    }
+
     private fun setupHappyPlacesListIntoAdapter(placesList: ArrayList<PlaceEntity>,
                                                 placeDao: PlaceDao) {
         if (placesList.isNotEmpty()) {
             val itemAdapter =  HappyPlaceAdapter(requireContext(), placesList,
                 { place ->
-                    updateIsFavorite(place, placeDao) },
-            )
+                    updateIsFavorite(place, placeDao) })
+
+            setupSearchViewAdapter(placesList, placeDao, itemAdapter)
 
             binding?.rvList?.layoutManager = LinearLayoutManager(requireContext(),
-                LinearLayoutManager.VERTICAL, true)
+                LinearLayoutManager.VERTICAL, false)
             binding?.rvList?.adapter = itemAdapter
+            binding?.rvList?.smoothScrollToPosition(0)
 
             itemAdapter.setOnClickListener(object : HappyPlaceAdapter.OnClickListener {
                 override fun onClick(position: Int, model: PlaceEntity) {
@@ -98,12 +135,14 @@ class HomeFragment : Fragment() {
             val deleteItemTouchHelper = ItemTouchHelper(deleteSwipeHandler)
             deleteItemTouchHelper.attachToRecyclerView(binding?.rvList)
 
+            binding?.svSearchbar?.visibility = View.VISIBLE
             binding?.rvList?.visibility = View.VISIBLE
             binding?.ivNoItem?.visibility = View.INVISIBLE
             binding?.tvNoItem?.visibility = View.INVISIBLE
 
         } else {
             binding?.rvList?.visibility = View.INVISIBLE
+            binding?.svSearchbar?.visibility = View.INVISIBLE
             binding?.ivNoItem?.visibility = View.VISIBLE
             binding?.tvNoItem?.visibility = View.VISIBLE
         }

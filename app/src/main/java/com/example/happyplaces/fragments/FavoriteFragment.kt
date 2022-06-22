@@ -1,5 +1,6 @@
 package com.example.happyplaces.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +12,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.example.happyplaces.R
+import com.example.happyplaces.activities.HappyPlaceDetailActivity
 import com.example.happyplaces.adapters.FavoritePlaceAdapter
 import com.example.happyplaces.database.PlaceApp
+import com.example.happyplaces.database.PlaceEntity
 import com.example.happyplaces.databinding.FragmentFavoriteBinding
 import com.example.happyplaces.utils.CenterZoom
 import kotlinx.coroutines.flow.collect
@@ -51,7 +54,18 @@ class FavoriteFragment : Fragment() {
         lifecycleScope.launch {
             placeDao.getFavoritePlaces().collect {
                 val list = ArrayList(it)
-                binding?.rvList?.adapter = FavoritePlaceAdapter(requireContext(), list)
+
+                val itemAdapter = FavoritePlaceAdapter(requireContext(), list)
+                binding?.rvList?.adapter = itemAdapter
+
+                itemAdapter.setOnClickListener(object : FavoritePlaceAdapter.OnClickListener {
+                    override fun onClick(position: Int, model: PlaceEntity) {
+                        val intent = Intent(requireContext(), HappyPlaceDetailActivity::class.java)
+                        intent.putExtra(HomeFragment.EXTRA_PLACE_DETAILS, model)
+                        startActivity(intent)
+                        requireActivity().finish()
+                    }
+                })
             }
         }
 

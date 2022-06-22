@@ -3,6 +3,7 @@ package com.example.happyplaces.utils
 import android.content.Context
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlin.math.abs
 
 class CenterZoom : LinearLayoutManager {
 
@@ -22,7 +23,7 @@ class CenterZoom : LinearLayoutManager {
         recycler: RecyclerView.Recycler?,
         state: RecyclerView.State?
     ): Int {
-        val orientation = getOrientation()
+        val orientation = orientation
         if (orientation == HORIZONTAL) {
             val scrolled = super.scrollHorizontallyBy(dx, recycler, state)
 
@@ -35,7 +36,7 @@ class CenterZoom : LinearLayoutManager {
             for (i in 0 until childCount) {
                 val child = getChildAt(i)
                 val childMidPoint = (getDecoratedRight(child!!) + getDecoratedLeft(child)) / 2f
-                val d = d1.coerceAtMost(Math.abs(midpoint - childMidPoint))
+                val d = d1.coerceAtMost(abs(midpoint - childMidPoint))
                 val scale = s0 + (s1 - s0) * (d - d0) / (d1 - d0)
                 child.scaleX = scale
                 child.scaleY = scale

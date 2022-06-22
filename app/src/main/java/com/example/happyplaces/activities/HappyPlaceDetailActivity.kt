@@ -14,10 +14,18 @@ import com.example.happyplaces.database.PlaceEntity
 import com.example.happyplaces.databinding.ActivityHappyPlaceDetailBinding
 import com.example.happyplaces.fragments.AddFragment
 import com.example.happyplaces.fragments.HomeFragment
+import com.google.android.gms.dynamic.SupportFragmentWrapper
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 
-class HappyPlaceDetailActivity : AppCompatActivity() {
+class HappyPlaceDetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private var binding: ActivityHappyPlaceDetailBinding? = null
+    var happyPlaceDetailModel: PlaceEntity? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +35,6 @@ class HappyPlaceDetailActivity : AppCompatActivity() {
         binding?.collapsingToolbar?.setExpandedTitleTypeface(
             Typeface.create(binding?.collapsingToolbar?.getExpandedTitleTypeface(), Typeface.BOLD))
 
-        var happyPlaceDetailModel: PlaceEntity? = null
         if (intent.hasExtra(HomeFragment.EXTRA_PLACE_DETAILS)) {
             happyPlaceDetailModel =
                 intent.getParcelableExtra(HomeFragment.EXTRA_PLACE_DETAILS) as PlaceEntity?
@@ -40,7 +47,8 @@ class HappyPlaceDetailActivity : AppCompatActivity() {
                 onBackPressed()
             }
 
-            setValues(happyPlaceDetailModel)
+            setValues(happyPlaceDetailModel!!)
+            setMapFragment()
         }
 
         binding?.fabEdit?.setOnClickListener {
@@ -50,6 +58,37 @@ class HappyPlaceDetailActivity : AppCompatActivity() {
             finish()
         }
 
+        binding?.llPhone?.setOnClickListener {
+            val number = happyPlaceDetailModel!!.phoneNumber!!.trim()
+            val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel: " + Uri.encode(number)))
+            startActivity(intent)
+        }
+        binding?.llWebsite?.setOnClickListener {
+            val url = happyPlaceDetailModel!!.website!!.trim()
+            val intent = Intent(Intent.ACTION_VIEW)
+
+            if (url.contains("https://"))
+                intent.data = Uri.parse(url)
+            else
+                intent.data = Uri.parse("https://$url")
+
+            startActivity(intent)
+        }
+        binding?.llEmail?.setOnClickListener {
+            val addresses = happyPlaceDetailModel?.emailAddress?.split(",".toRegex())?.toTypedArray()
+            val intent = Intent(Intent.ACTION_SENDTO).apply {
+                data = Uri.parse("mailto:")
+                putExtra(Intent.EXTRA_EMAIL, addresses)
+            }
+            startActivity(intent)
+        }
+
+    }
+
+    private fun setMapFragment() {
+        val supportMapsFragment: SupportMapFragment =
+            supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        supportMapsFragment.getMapAsync(this)
     }
 
     @SuppressLint("SetTextI18n")
@@ -191,6 +230,15 @@ class HappyPlaceDetailActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         binding = null
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        // Add Marker For Location
+        val position = LatLng(happyPlaceDetailModel!!.latitude, happyPlaceDetailModel!!.longitude)
+        googleMap.addMarker(MarkerOptions().position(position).title(happyPlaceDetailModel!!.location))
+        // Add Zoom Feature on location
+        val newLatLngZoom = CameraUpdateFactory.newLatLngZoom(position, 15f)
+        googleMap.animateCamera(newLatLngZoom)
     }
 
 }

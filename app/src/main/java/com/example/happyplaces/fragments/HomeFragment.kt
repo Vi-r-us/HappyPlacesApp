@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -65,7 +64,6 @@ class HomeFragment : Fragment() {
 
     private fun setupSearchViewAdapter(
         placesList: ArrayList<PlaceEntity>,
-        placeDao: PlaceDao,
         itemAdapter: HappyPlaceAdapter
     ) {
         binding?.svSearchbar?.clearFocus()
@@ -74,19 +72,17 @@ class HomeFragment : Fragment() {
                 return false
             }
 
+            @SuppressLint("NotifyDataSetChanged")
             override fun onQueryTextChange(newText: String?): Boolean {
                 val filteredPlaceList = ArrayList<PlaceEntity>()
 
                 placesList.forEach {
-                    if (it.title!!.lowercase(Locale.getDefault())!!
+                    if (it.title!!.lowercase(Locale.getDefault())
                             .contains(newText!!.lowercase(Locale.getDefault())))
                         filteredPlaceList.add(it)
                 }
 
-                if (filteredPlaceList.isNotEmpty())
-                    itemAdapter.setFilteredList(filteredPlaceList)
-                else
-                    Toast.makeText(requireContext(), "Data Not Found", Toast.LENGTH_SHORT).show()
+                itemAdapter.setFilteredList(filteredPlaceList)
                 itemAdapter.notifyDataSetChanged()
                 return false
             }
@@ -101,7 +97,7 @@ class HomeFragment : Fragment() {
                 { place ->
                     updateIsFavorite(place, placeDao) })
 
-            setupSearchViewAdapter(placesList, placeDao, itemAdapter)
+            setupSearchViewAdapter(placesList, itemAdapter)
 
             binding?.rvList?.layoutManager = LinearLayoutManager(requireContext(),
                 LinearLayoutManager.VERTICAL, false)

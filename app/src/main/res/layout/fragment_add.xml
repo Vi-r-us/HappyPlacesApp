@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:text="Place details"
+                android:text="@string/place_details"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:text="Provide some information about this place.If this \nplace is added to Maps."
+                android:text="@string/provide_some_information_about_this_place_if_this_nplace_is_added_to_maps"
                 android:textSize="15sp"
 
                 app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +51,7 @@
 
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:hint="Place Name (required)*"
+                android:hint="@string/place_name_required"
                 app:boxCornerRadiusBottomEnd="15dp"
 
                 app:boxCornerRadiusBottomStart="15dp"
@@ -83,7 +83,7 @@
                 android:layout_width="match_parent"
 
                 android:layout_height="wrap_content"
-                android:hint="Category"
+                android:hint="@string/category"
                 app:boxCornerRadiusBottomEnd="15dp"
                 app:boxCornerRadiusBottomStart="15dp"
 
@@ -100,7 +100,8 @@
                     android:id="@+id/actv_category"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none" />
+                    android:inputType="none"
+                    tools:ignore="LabelFor" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -111,7 +112,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:hint="Description (required)*"
+                android:hint="@string/description_required"
                 app:helperText=""
                 app:helperTextTextColor="@android:color/holo_red_dark"
 
@@ -143,7 +144,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:hint="Date (required)*"
+                android:hint="@string/date_required"
                 app:helperText=""
                 app:helperTextTextColor="@android:color/holo_red_dark"
 
@@ -179,7 +180,7 @@
                 android:layout_height="wrap_content"
 
                 android:layout_marginTop="20dp"
-                android:text="Contact"
+                android:text="@string/contact"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -202,7 +203,7 @@
                 app:boxStrokeColor="@color/add"
                 app:layout_constraintTop_toBottomOf="@id/tv_contactTitle"
 
-                android:hint="Phone Number"
+                android:hint="@string/phone_number"
                 app:hintTextColor="@color/add"
                 app:helperText=""
                 app:helperTextTextColor="@android:color/holo_red_dark"
@@ -233,7 +234,7 @@
                 app:boxStrokeColor="@color/add"
                 app:layout_constraintTop_toBottomOf="@id/til_phoneNumber"
 
-                android:hint="Website"
+                android:hint="@string/website"
                 app:hintTextColor="@color/add"
                 app:helperText=""
                 app:helperTextTextColor="@android:color/holo_red_dark"
@@ -264,7 +265,7 @@
                 app:boxStrokeColor="@color/add"
                 app:layout_constraintTop_toBottomOf="@id/til_website"
 
-                android:hint="Email Address"
+                android:hint="@string/email_address"
                 app:hintTextColor="@color/add"
                 app:helperText=""
                 app:helperTextTextColor="@android:color/holo_red_dark"
@@ -288,7 +289,7 @@
                 android:layout_height="wrap_content"
 
                 android:layout_marginTop="20dp"
-                android:text="Location"
+                android:text="@string/location"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -299,7 +300,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_location"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
 
                 android:layout_marginTop="5dp"
@@ -310,6 +311,8 @@
                 app:boxCornerRadiusTopStart="15dp"
                 app:boxStrokeColor="@color/add"
                 app:layout_constraintTop_toBottomOf="@id/tv_locationTitle"
+                app:layout_constraintEnd_toStartOf="@+id/btn_my_location"
+                app:layout_constraintStart_toStartOf="parent"
 
                 app:helperText=""
                 app:helperTextTextColor="@android:color/holo_red_dark"
@@ -321,10 +324,27 @@
                     android:id="@+id/et_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
                     android:textCursorDrawable="@drawable/black_cursor"
                     android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageButton
+                android:id="@+id/btn_my_location"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/ic_round_my_location_24"
+                android:backgroundTint="#88B5F5"
+
+                app:layout_constraintTop_toTopOf="@id/til_location"
+                app:layout_constraintBottom_toBottomOf="@id/til_location"
+                app:layout_constraintStart_toEndOf="@id/til_location"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="ContentDescription" />
 
             <!-- Exact Address -->
             <TextView
@@ -333,7 +353,7 @@
                 android:layout_height="wrap_content"
 
                 android:layout_marginTop="20dp"
-                android:text="Address"
+                android:text="@string/address"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -349,7 +369,7 @@
 
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:hint="Street Address"
+                android:hint="@string/street_address"
                 app:boxCornerRadiusBottomEnd="15dp"
 
                 app:boxCornerRadiusBottomStart="15dp"
@@ -375,7 +395,7 @@
                 android:layout_width="match_parent"
 
                 android:layout_height="wrap_content"
-                android:hint="Office, Suite, Apt."
+                android:hint="@string/office_suite_apt"
                 app:boxCornerRadiusBottomEnd="15dp"
                 app:boxCornerRadiusBottomStart="15dp"
 
@@ -402,7 +422,7 @@
                 android:layout_height="wrap_content"
 
                 android:layout_marginTop="20dp"
-                android:text="State"
+                android:text="@string/state"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -444,7 +464,7 @@
                 android:layout_height="wrap_content"
 
                 android:layout_marginTop="20dp"
-                android:text="Country"
+                android:text="@string/country"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -487,7 +507,7 @@
                 android:layout_height="wrap_content"
 
                 android:layout_marginTop="20dp"
-                android:text="Zip"
+                android:text="@string/zip"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -530,7 +550,7 @@
                 android:layout_height="wrap_content"
 
                 android:layout_marginTop="20dp"
-                android:text="Rating"
+                android:text="@string/rating"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -558,7 +578,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:text="Place photos"
+                android:text="@string/place_photos"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -571,7 +591,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:text="Add helpful photos like storefronts, notices, or signs."
+                android:text="@string/add_helpful_photos_like_storefronts_notices_or_signs"
                 android:textSize="15sp"
 
                 app:layout_constraintStart_toStartOf="parent"
@@ -600,17 +620,19 @@
                     android:orientation="vertical"
                     android:visibility="visible"
                     android:layout_gravity="center"
-                    android:gravity="center">
+                    android:gravity="center"
+                    tools:ignore="UseCompoundDrawables">
                     <ImageView
                         android:id="@+id/iv_camera"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:background="@drawable/photo_camera"/>
+                        android:background="@drawable/photo_camera"
+                        tools:ignore="ContentDescription" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="Take Photo"
+                        android:text="@string/take_photo"
                         android:textStyle="bold"
                         android:textColor="@color/black"/>
                 </LinearLayout>
@@ -620,7 +642,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:visibility="invisible"/>
+                    android:visibility="invisible"
+                    tools:ignore="ContentDescription" />
 
             </androidx.cardview.widget.CardView>
 
@@ -647,17 +670,19 @@
 
                     android:visibility="visible"
                     android:layout_gravity="center"
-                    android:gravity="center">
+                    android:gravity="center"
+                    tools:ignore="UseCompoundDrawables">
                     <ImageView
                         android:id="@+id/iv_upload"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:background="@drawable/upload"/>
+                        android:background="@drawable/upload"
+                        tools:ignore="ContentDescription" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="Upload Photo"
+                        android:text="@string/upload_photo"
                         android:textStyle="bold"
                         android:textColor="@color/black"/>
                 </LinearLayout>
@@ -667,7 +692,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:visibility="invisible"/>
+                    android:visibility="invisible"
+                    tools:ignore="ContentDescription" />
 
             </androidx.cardview.widget.CardView>
 
@@ -682,7 +708,7 @@
                 android:backgroundTint="@color/add"
                 android:elevation="5dp"
 
-                android:text="Save"
+                android:text="@string/save"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"

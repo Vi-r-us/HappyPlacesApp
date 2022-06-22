@@ -17,4 +17,28 @@
 
     <string name="description">Description</string>
     <string name="dummy_text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
+    <string name="google_maps_api_key">AIzaSyCjSFrpxZCpDfo3LA6jR3Y2n3VDNf8up9U</string>
+    <string name="location">Location</string>
+    <string name="place_details">Place details</string>
+    <string name="provide_some_information_about_this_place_if_this_nplace_is_added_to_maps">Provide some information about this place.If this \nplace is added to Maps.</string>
+    <string name="place_name_required">Place Name (required)*</string>
+    <string name="category">Category</string>
+    <string name="description_required">Description (required)*</string>
+    <string name="date_required">Date (required)*</string>
+    <string name="contact">Contact</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="website">Website</string>
+    <string name="email_address">Email Address</string>
+    <string name="address">Address</string>
+    <string name="street_address">Street Address</string>
+    <string name="office_suite_apt">Office, Suite, Apt.</string>
+    <string name="state">State</string>
+    <string name="country">Country</string>
+    <string name="zip">Zip</string>
+    <string name="rating">Rating</string>
+    <string name="place_photos">Place photos</string>
+    <string name="add_helpful_photos_like_storefronts_notices_or_signs">Add helpful photos like storefronts, notices, or signs.</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="upload_photo">Upload Photo</string>
+    <string name="save">Save</string>
 </resources>

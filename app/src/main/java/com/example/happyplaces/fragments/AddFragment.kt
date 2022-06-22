@@ -1,11 +1,17 @@
 package com.example.happyplaces.fragments
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.*
 import android.graphics.Bitmap
+import android.location.Location
+import android.location.LocationManager
+import android.location.LocationRequest
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Looper
 import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
@@ -17,6 +23,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -26,6 +33,18 @@ import com.example.happyplaces.database.PlaceApp
 import com.example.happyplaces.database.PlaceDao
 import com.example.happyplaces.database.PlaceEntity
 import com.example.happyplaces.databinding.FragmentAddBinding
+import com.example.happyplaces.utils.GetAddressFromLatLng
+import com.google.android.gms.common.api.Status
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest.create
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.AutocompleteActivity
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.karumi.dexter.Dexter
@@ -54,6 +73,7 @@ class AddFragment : Fragment(), View.OnClickListener {
     private var mLongitude: Double = 0.0
 
     private var mPlaceDetail: PlaceEntity? = null
+    private lateinit var mFusedLocationClient: FusedLocationProviderClient
 
     // Gallery Intent
     private var galleryImageResultLauncher: ActivityResultLauncher<Intent> =
@@ -95,6 +115,25 @@ class AddFragment : Fragment(), View.OnClickListener {
 
             }
         }
+    // Map Intent
+    private var mapLocationResultLauncher: ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            Log.e("AddHappyPlace", "${Activity.RESULT_OK}, ${result.resultCode}")
+
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                val place: Place = Autocomplete.getPlaceFromIntent(data!!)
+                Log.e("AddHappyPlace", "onActivityResult: place=${place}")
+
+                binding?.etLocation?.setText(place.address)
+                mLatitude = place.latLng!!.latitude
+                mLongitude = place.latLng!!.longitude
+
+            } else if (result.resultCode == AutocompleteActivity.RESULT_ERROR) {
+                val status: Status? = Autocomplete.getStatusFromIntent(result.data!!)
+                Log.e("AddHappyPlace", "onResult[PLACE] error: ${status?.statusMessage}")
+            }
+        }
 
     // Save the options selected in category after the fragment has been changed
     override fun onResume() {
@@ -105,6 +144,7 @@ class AddFragment : Fragment(), View.OnClickListener {
         super.onResume()
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -121,6 +161,13 @@ class AddFragment : Fragment(), View.OnClickListener {
 
         // Get Place Detail for update
         mPlaceDetail = arguments?.getParcelable(HomeFragment.EXTRA_PLACE_DETAILS) as PlaceEntity?
+        // Fused Location Client initialization
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+
+        // Setup Places Module
+        if(!Places.isInitialized()) {
+            Places.initialize(requireContext(), resources.getString(R.string.google_maps_api_key))
+        }
 
         if (mPlaceDetail != null) {
             setAllEditText(mPlaceDetail!!)
@@ -135,34 +182,10 @@ class AddFragment : Fragment(), View.OnClickListener {
         binding?.cvUploadPhotoCard?.setOnClickListener(this)
         binding?.cvTakePhotoCard?.setOnClickListener(this)
         binding?.btnSave?.setOnClickListener(this)
+        binding?.etLocation?.setOnClickListener(this)
+        binding?.btnMyLocation?.setOnClickListener(this)
 
         return binding?.root
-    }
-
-    private fun setAllEditText(mPlaceDetail: PlaceEntity) {
-        // Mandatory Fields
-        binding?.etPlaceName?.setText(mPlaceDetail.title)
-        binding?.etDate?.setText(mPlaceDetail.date)
-        binding?.etDescription?.setText(mPlaceDetail.description)
-        binding?.etLocation?.setText(mPlaceDetail.location)
-        mLatitude = mPlaceDetail.latitude
-        mLongitude = mPlaceDetail.longitude
-
-        saveImageToInternalStorage = Uri.parse(mPlaceDetail.image)
-        binding?.ivPlaceUploadedPhoto?.setImageURI(saveImageToInternalStorage)
-        binding?.ivPlaceUploadedPhoto?.visibility = View.VISIBLE
-
-        // Not-Mandatory Fields
-        binding?.actvCategory?.setText(mPlaceDetail.category)
-        binding?.ratingBar?.rating = mPlaceDetail.rating
-        binding?.etStreetAddress?.setText(mPlaceDetail.streetAddress1)
-        binding?.etApt?.setText(mPlaceDetail.streetAddress2)
-        binding?.etCountry?.setText(mPlaceDetail.country)
-        binding?.etState?.setText(mPlaceDetail.state)
-        binding?.etZip?.setText(mPlaceDetail.zip)
-        binding?.etPhoneNumber?.setText(mPlaceDetail.phoneNumber)
-        binding?.etEmail?.setText(mPlaceDetail.emailAddress)
-        binding?.etWebsite?.setText(mPlaceDetail.website)
     }
 
     override fun onClick(v: View?) {
@@ -176,6 +199,48 @@ class AddFragment : Fragment(), View.OnClickListener {
             }
             R.id.cv_takePhotoCard -> {
                 takePhotoFromCamera()
+            }
+            R.id.btn_my_location -> {
+                // If location is turned off
+                if (!isLocationEnabled()) {
+                    Toast.makeText(requireContext(),
+                    "Your Location provider is turned off. Please turn on location",
+                    Toast.LENGTH_LONG).show()
+
+                    val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                    startActivity(intent)
+                }
+                // if location in on
+                else {
+                    Dexter.withContext(activity).withPermissions(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    ).withListener(object : MultiplePermissionsListener {
+                        @RequiresApi(Build.VERSION_CODES.S)
+                        override fun onPermissionsChecked(p0: MultiplePermissionsReport?) {
+                            requestLocationData()
+                        }
+
+                        override fun onPermissionRationaleShouldBeShown(
+                            p0: MutableList<PermissionRequest>?,
+                            p1: PermissionToken?
+                        ) {
+                            showRationalDialogForPermission()
+                        }
+                    }).onSameThread().check()
+                }
+            }
+            R.id.et_location -> {
+                try {
+                    val fields = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG,
+                                        Place.Field.ADDRESS)
+                    val intent = Autocomplete.IntentBuilder(
+                        AutocompleteActivityMode.FULLSCREEN, fields)
+                        .build(requireContext())
+                    mapLocationResultLauncher.launch(intent)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
             R.id.btn_Save -> {
                 // Remove required text
@@ -223,6 +288,85 @@ class AddFragment : Fragment(), View.OnClickListener {
                 }
             }
         }
+    }
+
+    private fun isLocationEnabled(): Boolean {
+        val locationManager: LocationManager =
+            requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.S)
+    @SuppressLint("MissingPermission")
+    private fun requestLocationData() {
+        val myLocationRequest = create()
+        myLocationRequest.priority = LocationRequest.QUALITY_HIGH_ACCURACY
+        myLocationRequest.interval = 1000
+        myLocationRequest.numUpdates = 1
+
+        Looper.myLooper()?.let {
+            mFusedLocationClient.requestLocationUpdates(
+                myLocationRequest, mLocationCallBack, it
+            )
+        }
+    }
+
+    private val mLocationCallBack = object : LocationCallback() {
+        override fun onLocationResult(p0: LocationResult) {
+            val mLastLocation: Location? = p0.lastLocation
+            mLatitude = mLastLocation!!.latitude
+            mLongitude = mLastLocation.longitude
+
+            //Code to translate the lat and lng values to a human understandable address text
+            val addressTask = GetAddressFromLatLng(requireContext(),
+                lat = mLatitude,lng = mLongitude)
+            addressTask.setCustomAddressListener(object : GetAddressFromLatLng.AddressListener {
+                override fun onAddressFound(address: String) {
+                    binding?.etLocation?.setText(address)
+                }
+
+                override fun onError() {
+                    Log.e("Get address:: ", "onError: Something went wrong")
+                    Toast.makeText(requireContext(),
+                        "Something went Wrong",
+                        Toast.LENGTH_LONG).show()
+                }
+            })
+
+            lifecycleScope.launch(Dispatchers.IO) {
+                // CoroutineScope tied to this LifecycleOwner's Lifecycle.
+                // This scope will be cancelled when the Lifecycle is destroyed
+                // starts the task to get the address in text from the lat and lng values
+                addressTask.launchBackgroundProcessForRequest()
+            }
+        }
+    }
+
+    private fun setAllEditText(mPlaceDetail: PlaceEntity) {
+        // Mandatory Fields
+        binding?.etPlaceName?.setText(mPlaceDetail.title)
+        binding?.etDate?.setText(mPlaceDetail.date)
+        binding?.etDescription?.setText(mPlaceDetail.description)
+        binding?.etLocation?.setText(mPlaceDetail.location)
+        mLatitude = mPlaceDetail.latitude
+        mLongitude = mPlaceDetail.longitude
+
+        saveImageToInternalStorage = Uri.parse(mPlaceDetail.image)
+        binding?.ivPlaceUploadedPhoto?.setImageURI(saveImageToInternalStorage)
+        binding?.ivPlaceUploadedPhoto?.visibility = View.VISIBLE
+
+        // Not-Mandatory Fields
+        binding?.actvCategory?.setText(mPlaceDetail.category)
+        binding?.ratingBar?.rating = mPlaceDetail.rating
+        binding?.etStreetAddress?.setText(mPlaceDetail.streetAddress1)
+        binding?.etApt?.setText(mPlaceDetail.streetAddress2)
+        binding?.etCountry?.setText(mPlaceDetail.country)
+        binding?.etState?.setText(mPlaceDetail.state)
+        binding?.etZip?.setText(mPlaceDetail.zip)
+        binding?.etPhoneNumber?.setText(mPlaceDetail.phoneNumber)
+        binding?.etEmail?.setText(mPlaceDetail.emailAddress)
+        binding?.etWebsite?.setText(mPlaceDetail.website)
     }
 
     private fun updateRecord(placeDao: PlaceDao, placeEntity: PlaceEntity) {

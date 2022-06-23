@@ -144,6 +144,30 @@ class AddFragment : Fragment(), View.OnClickListener {
         super.onResume()
     }
 
+    private fun clearTextView() {
+        binding?.etPlaceName?.setText("")
+        binding?.actvCategory?.setText("")
+        binding?.etDescription?.setText("")
+        binding?.etDate?.setText("")
+
+        binding?.etPhoneNumber?.setText("")
+        binding?.etWebsite?.setText("")
+        binding?.etEmail?.setText("")
+
+        binding?.etLocation?.setText("")
+
+        binding?.etStreetAddress?.setText("")
+        binding?.etApt?.setText("")
+
+        binding?.etState?.setText("")
+        binding?.etCountry?.setText("")
+        binding?.etZip?.setText("")
+
+        binding?.ratingBar?.rating = 0.0f
+        binding?.ivPlaceUploadedPhoto?.setImageDrawable(null)
+        binding?.ivPlaceCameraPhoto?.setImageDrawable(null)
+    }
+
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -172,6 +196,8 @@ class AddFragment : Fragment(), View.OnClickListener {
         if (mPlaceDetail != null) {
             setAllEditText(mPlaceDetail!!)
             binding?.btnSave?.text = "Update"
+        } else {
+            clearTextView()
         }
 
         picker.addOnPositiveButtonClickListener {
@@ -536,6 +562,8 @@ class AddFragment : Fragment(), View.OnClickListener {
         super.onDestroy()
         binding = null
     }
+
+
 
     companion object {
         private const val IMAGE_DIRECTORY = "HappyPlacesImages"

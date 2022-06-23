@@ -15,9 +15,10 @@
         <item>Education</item>
     </string-array>
 
+    <string name="google_maps_api_key">YOUR_API_KEY</string>
+    
     <string name="description">Description</string>
     <string name="dummy_text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
-    <string name="google_maps_api_key">AIzaSyCjSFrpxZCpDfo3LA6jR3Y2n3VDNf8up9U</string>
     <string name="location">Location</string>
     <string name="place_details">Place details</string>
     <string name="provide_some_information_about_this_place_if_this_nplace_is_added_to_maps">Provide some information about this place.If this \nplace is added to Maps.</string>

@@ -22,6 +22,9 @@ Happy Places Android App built using Kotlin based on modern Android application 
   - Also added intent actions for call dialer, URL open, and email.
 
 ## Screenshots 
+<img src="screenshots/HomeScreen.png" width="30%" hspace="10" vspace="10" />  <img src="screenshots/swipeCallbacksAndSearch.gif" width="30%" hspace="10" vspace="10"/>  <img src="screenshots/favoriteScreen.gif" width="30%" hspace="10" vspace="10"/>
+
+<img src="screenshots/DetailPage.gif" width="30%" hspace="10" vspace="10" />  <img src="screenshots/contactsIntent.gif" width="30%" hspace="10" vspace="10"/>  <img src="screenshots/addScreen.gif" width="30%" hspace="10" vspace="10"/>
 
 ## Tech Stack & Open-source libraries 
 * Minimum SDK level 23.

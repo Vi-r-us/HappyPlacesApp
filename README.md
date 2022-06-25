@@ -42,6 +42,7 @@ Happy Places Android App built using Kotlin based on modern Android application 
 * [RecyclerView](https://developer.android.com/guide/topics/ui/layout/recyclerview) - for display a scrolling list of elements based on large data sets.
 * [Material-Components](https://github.com/material-components/material-components-android) - Material design components.
   - [Material Dialogs](https://github.com/afollestad/material-dialogs) - library with extensible dialogs API for Kotlin & Android.
+* [Dexter](https://github.com/Karumi/Dexter) - Dexter is an Android library that simplifies the process of requesting permissions at runtime.
 * [KenBurnsView](https://github.com/flavioarfaria/KenBurnsView) - Android library that provides an extension to ImageView that creates an immersive experience by animating its drawable.
 * [Picasso](https://github.com/square/picasso) - A powerful image downloading and caching library for Android
 
